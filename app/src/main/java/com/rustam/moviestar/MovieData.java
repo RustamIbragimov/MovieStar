@@ -3,12 +3,14 @@ package com.rustam.moviestar;
 
 import android.graphics.drawable.Icon;
 import android.media.Image;
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.widget.ImageView;
 
 /**
  * Created by ribra on 12/19/2015.
  */
-public class MovieData {
+public class MovieData implements Parcelable {
     private String title;
     private String posterPath;
     private String overview;
@@ -22,6 +24,14 @@ public class MovieData {
         this.overview = overview;
         this.rating = rating;
         this.releaseDate = releaseDate;
+    }
+
+    private MovieData(Parcel in) {
+        this.title = in.readString();
+        this.posterPath = in.readString();
+        this.overview = in.readString();
+        this.rating = in.readString();
+        this.releaseDate = in.readString();
     }
 
     public String getOverview() {
@@ -74,4 +84,30 @@ public class MovieData {
                 ", releaseDate='" + releaseDate + '\'' +
                 '}';
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeString(title);
+        dest.writeString(posterPath);
+        dest.writeString(overview);
+        dest.writeString(rating);
+        dest.writeString(releaseDate);
+    }
+
+    public static final Parcelable.Creator<MovieData> CREATOR = new Creator<MovieData>() {
+        @Override
+        public MovieData createFromParcel(Parcel source) {
+            return new MovieData(source);
+        }
+
+        @Override
+        public MovieData[] newArray(int size) {
+            return new MovieData[size];
+        }
+    };
 }

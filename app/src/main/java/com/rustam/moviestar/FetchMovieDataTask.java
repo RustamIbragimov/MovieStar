@@ -1,11 +1,11 @@
 package com.rustam.moviestar;
 
-import android.annotation.TargetApi;
 import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Build;
 import android.util.Log;
 import android.widget.ArrayAdapter;
+
+import com.rustam.moviestar.fragments.MainActivityFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,8 +52,10 @@ public class FetchMovieDataTask extends AsyncTask<String, Void, MovieData[]> {
             title = movieObject.getString(OWN_TITLE);
             path = movieObject.getString(OWN_POSTER_PATH);
             overview = movieObject.getString(OWN_OVERVIEW);
-            releaseDate = movieObject.getString(OWN_RELEASE_DATE);
-            rating = String.valueOf(movieObject.getDouble(OWN_RATING));
+            releaseDate = Utility.getYearFromDate(
+                    movieObject.getString(OWN_RELEASE_DATE));
+            rating = Utility.modifyRating(
+                    String.valueOf(movieObject.getDouble(OWN_RATING)));
 
             moviesData[i] = new MovieData(title, path, overview, rating, releaseDate);
 

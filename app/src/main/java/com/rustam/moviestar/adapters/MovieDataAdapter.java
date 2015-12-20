@@ -11,6 +11,7 @@ import android.widget.ImageView;
 
 import com.rustam.moviestar.MovieData;
 import com.rustam.moviestar.R;
+import com.rustam.moviestar.Utility;
 import com.squareup.picasso.Picasso;
 
 import java.util.List;
@@ -27,12 +28,6 @@ public class MovieDataAdapter extends ArrayAdapter<MovieData> {
     }
 
 
-    private String createRequestString(String path) {
-        final String BASE_URL = "http://image.tmdb.org/t/p/";
-        final String SIZE = "w185/";
-        return BASE_URL + SIZE + path;
-    }
-
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
@@ -43,7 +38,7 @@ public class MovieDataAdapter extends ArrayAdapter<MovieData> {
         }
 
         ImageView posterView = (ImageView) rootView.findViewById(R.id.grid_item_poster_imageview);
-        String url = createRequestString(movieData.getPosterPath());
+        String url = Utility.createRequestString(movieData.getPosterPath());
         Picasso.with(rootView.getContext()).load(url).into(posterView);
 
         return rootView;
